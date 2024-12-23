@@ -1,0 +1,7 @@
+IR sensor
+Ultrasonic sensor
+Smoke sensor
+Temperature sensor
+Motor driver
+Motors
+Battery
