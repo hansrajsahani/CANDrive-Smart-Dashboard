@@ -8,7 +8,6 @@ The system integrates various sensors and displays to track and present:
 - **Vehicle Speed**: Displays the current speed of the vehicle.
 - **Smoke Detection**: Alerts the driver if smoke is detected, ensuring timely intervention.
 - **Engine Temperature**: Monitors and displays the temperature of the vehicle's engine.
-- **Fuel Level**: Indicates the current fuel status.
 - **Door Status**: Notifies whether any vehicle door is open or closed.
 
 ## Current Status
@@ -28,7 +27,6 @@ This project is currently in the **development phase**, with ongoing efforts foc
   - Temperature Sensor
   - Fuel Gauge Sensor
   - Door Status Switch/Sensor
-- **Display Unit**: OLED / LED Display
 - **Online Dashboard Unit**: Thingsboard, Node Red
 - **Software Tools**: Arduino IDE, STM32 CubeIDE, VS Code 
 - **Programming Language**: C, Python
