@@ -25,7 +25,6 @@ This project is currently in the **development phase**, with ongoing efforts foc
   - Speed Sensor
   - Smoke Sensor
   - Temperature Sensor
-  - Fuel Gauge Sensor
   - Door Status Switch/Sensor
 - **Online Dashboard Unit**: Thingsboard, Node Red
 - **Software Tools**: Arduino IDE, STM32 CubeIDE, VS Code 
