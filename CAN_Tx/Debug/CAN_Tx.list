@@ -5,21 +5,21 @@ Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
   0 .isr_vector   00000188  08000000  08000000  00001000  2**0
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  1 .text         0000216c  08000188  08000188  00001188  2**2
+  1 .text         000021ec  08000188  08000188  00001188  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000010  080022f4  080022f4  000032f4  2**2
+  2 .rodata       00000010  08002374  08002374  00003374  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08002304  08002304  0000400c  2**0
+  3 .ARM.extab    00000000  08002384  08002384  0000400c  2**0
                   CONTENTS
-  4 .ARM          00000008  08002304  08002304  00003304  2**2
+  4 .ARM          00000008  08002384  08002384  00003384  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  0800230c  0800230c  0000400c  2**0
+  5 .preinit_array 00000000  0800238c  0800238c  0000400c  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  0800230c  0800230c  0000330c  2**2
+  6 .init_array   00000004  0800238c  0800238c  0000338c  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  08002310  08002310  00003310  2**2
+  7 .fini_array   00000004  08002390  08002390  00003390  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         0000000c  20000000  08002314  00004000  2**2
+  8 .data         0000000c  20000000  08002394  00004000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
   9 .ccmram       00000000  10000000  10000000  0000400c  2**0
                   CONTENTS
@@ -39,11 +39,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  17 .debug_macro  0001f3fd  00000000  00000000  0000b597  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_line   00006215  00000000  00000000  0002a994  2**0
+ 18 .debug_line   00006217  00000000  00000000  0002a994  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .debug_str    000bedcb  00000000  00000000  00030ba9  2**0
+ 19 .debug_str    000bedca  00000000  00000000  00030bab  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 20 .comment      00000043  00000000  00000000  000ef974  2**0
+ 20 .comment      00000043  00000000  00000000  000ef975  2**0
                   CONTENTS, READONLY
  21 .debug_frame  00001514  00000000  00000000  000ef9b8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
@@ -66,7 +66,7 @@ Disassembly of section .text:
  800019e:	bd10      	pop	{r4, pc}
  80001a0:	2000000c 	.word	0x2000000c
  80001a4:	00000000 	.word	0x00000000
- 80001a8:	080022dc 	.word	0x080022dc
+ 80001a8:	0800235c 	.word	0x0800235c
 
 080001ac <frame_dummy>:
  80001ac:	b508      	push	{r3, lr}
@@ -78,7 +78,7 @@ Disassembly of section .text:
  80001ba:	bd08      	pop	{r3, pc}
  80001bc:	00000000 	.word	0x00000000
  80001c0:	20000010 	.word	0x20000010
- 80001c4:	080022dc 	.word	0x080022dc
+ 80001c4:	0800235c 	.word	0x0800235c
 
 080001c8 <__aeabi_uldivmod>:
  80001c8:	b953      	cbnz	r3, 80001e0 <__aeabi_uldivmod+0x18>
@@ -535,7 +535,7 @@ void SystemClock_Config(void)
  80005aa:	2230      	movs	r2, #48	@ 0x30
  80005ac:	2100      	movs	r1, #0
  80005ae:	4618      	mov	r0, r3
- 80005b0:	f001 fe68 	bl	8002284 <memset>
+ 80005b0:	f001 fea8 	bl	8002304 <memset>
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
  80005b4:	f107 030c 	add.w	r3, r7, #12
  80005b8:	2200      	movs	r2, #0
@@ -920,15 +920,15 @@ void CAN1_RX0_IRQHandler(void)
  8000802:	b084      	sub	sp, #16
  8000804:	af00      	add	r7, sp, #0
   /* USER CODE BEGIN CAN1_RX0_IRQn 0 */
-	 uint32_t errorcode = HAL_CAN_ERROR_NONE;
+ uint32_t errorcode = HAL_CAN_ERROR_NONE;
  8000806:	2300      	movs	r3, #0
  8000808:	60fb      	str	r3, [r7, #12]
-	 uint32_t interrupts = hcan1.Instance->IER;
+ uint32_t interrupts = hcan1.Instance->IER;
  800080a:	4b1d      	ldr	r3, [pc, #116]	@ (8000880 <CAN1_RX0_IRQHandler+0x80>)
  800080c:	681b      	ldr	r3, [r3, #0]
  800080e:	695b      	ldr	r3, [r3, #20]
  8000810:	60bb      	str	r3, [r7, #8]
-	 uint32_t rf0rflags = hcan1.Instance->RF0R;
+ uint32_t rf0rflags = hcan1.Instance->RF0R;
  8000812:	4b1b      	ldr	r3, [pc, #108]	@ (8000880 <CAN1_RX0_IRQHandler+0x80>)
  8000814:	681b      	ldr	r3, [r3, #0]
  8000816:	68db      	ldr	r3, [r3, #12]
@@ -1544,7 +1544,7 @@ LoopFillZerobss:
 
 /* Call static constructors */
     bl __libc_init_array
- 8000aba:	f001 fbeb 	bl	8002294 <__libc_init_array>
+ 8000aba:	f001 fc2b 	bl	8002314 <__libc_init_array>
 /* Call the application's entry point.*/
   bl  main
  8000abe:	f7ff fcfb 	bl	80004b8 <main>
@@ -1557,7 +1557,7 @@ LoopFillZerobss:
   ldr r1, =_edata
  8000acc:	2000000c 	.word	0x2000000c
   ldr r2, =_sidata
- 8000ad0:	08002314 	.word	0x08002314
+ 8000ad0:	08002394 	.word	0x08002394
   ldr r2, =_sbss
  8000ad4:	2000000c 	.word	0x2000000c
   ldr r4, =_ebss
@@ -5522,7 +5522,7 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
  80020e2:	bf00      	nop
  80020e4:	40023c00 	.word	0x40023c00
  80020e8:	40023800 	.word	0x40023800
- 80020ec:	080022f4 	.word	0x080022f4
+ 80020ec:	08002374 	.word	0x08002374
  80020f0:	20000000 	.word	0x20000000
  80020f4:	20000004 	.word	0x20000004
 
@@ -5534,259 +5534,306 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(RCC_ClkInitTypeDef  *RCC_ClkInitStruct, ui
 __weak uint32_t HAL_RCC_GetSysClockFreq(void)
 {
  80020f8:	e92d 4fb0 	stmdb	sp!, {r4, r5, r7, r8, r9, sl, fp, lr}
- 80020fc:	b090      	sub	sp, #64	@ 0x40
+ 80020fc:	b094      	sub	sp, #80	@ 0x50
  80020fe:	af00      	add	r7, sp, #0
   uint32_t pllm = 0U;
  8002100:	2300      	movs	r3, #0
- 8002102:	637b      	str	r3, [r7, #52]	@ 0x34
+ 8002102:	647b      	str	r3, [r7, #68]	@ 0x44
   uint32_t pllvco = 0U;
  8002104:	2300      	movs	r3, #0
- 8002106:	63fb      	str	r3, [r7, #60]	@ 0x3c
+ 8002106:	64fb      	str	r3, [r7, #76]	@ 0x4c
   uint32_t pllp = 0U;
  8002108:	2300      	movs	r3, #0
- 800210a:	633b      	str	r3, [r7, #48]	@ 0x30
+ 800210a:	643b      	str	r3, [r7, #64]	@ 0x40
   uint32_t sysclockfreq = 0U;
  800210c:	2300      	movs	r3, #0
- 800210e:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 800210e:	64bb      	str	r3, [r7, #72]	@ 0x48
 
   /* Get SYSCLK source -------------------------------------------------------*/
   switch (RCC->CFGR & RCC_CFGR_SWS)
- 8002110:	4b59      	ldr	r3, [pc, #356]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
+ 8002110:	4b79      	ldr	r3, [pc, #484]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
  8002112:	689b      	ldr	r3, [r3, #8]
  8002114:	f003 030c 	and.w	r3, r3, #12
  8002118:	2b08      	cmp	r3, #8
  800211a:	d00d      	beq.n	8002138 <HAL_RCC_GetSysClockFreq+0x40>
  800211c:	2b08      	cmp	r3, #8
- 800211e:	f200 80a1 	bhi.w	8002264 <HAL_RCC_GetSysClockFreq+0x16c>
+ 800211e:	f200 80e1 	bhi.w	80022e4 <HAL_RCC_GetSysClockFreq+0x1ec>
  8002122:	2b00      	cmp	r3, #0
  8002124:	d002      	beq.n	800212c <HAL_RCC_GetSysClockFreq+0x34>
  8002126:	2b04      	cmp	r3, #4
  8002128:	d003      	beq.n	8002132 <HAL_RCC_GetSysClockFreq+0x3a>
- 800212a:	e09b      	b.n	8002264 <HAL_RCC_GetSysClockFreq+0x16c>
+ 800212a:	e0db      	b.n	80022e4 <HAL_RCC_GetSysClockFreq+0x1ec>
   {
     case RCC_CFGR_SWS_HSI:  /* HSI used as system clock source */
     {
       sysclockfreq = HSI_VALUE;
- 800212c:	4b53      	ldr	r3, [pc, #332]	@ (800227c <HAL_RCC_GetSysClockFreq+0x184>)
- 800212e:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 800212c:	4b73      	ldr	r3, [pc, #460]	@ (80022fc <HAL_RCC_GetSysClockFreq+0x204>)
+ 800212e:	64bb      	str	r3, [r7, #72]	@ 0x48
       break;
- 8002130:	e09b      	b.n	800226a <HAL_RCC_GetSysClockFreq+0x172>
+ 8002130:	e0db      	b.n	80022ea <HAL_RCC_GetSysClockFreq+0x1f2>
     }
     case RCC_CFGR_SWS_HSE:  /* HSE used as system clock  source */
     {
       sysclockfreq = HSE_VALUE;
- 8002132:	4b53      	ldr	r3, [pc, #332]	@ (8002280 <HAL_RCC_GetSysClockFreq+0x188>)
- 8002134:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 8002132:	4b73      	ldr	r3, [pc, #460]	@ (8002300 <HAL_RCC_GetSysClockFreq+0x208>)
+ 8002134:	64bb      	str	r3, [r7, #72]	@ 0x48
       break;
- 8002136:	e098      	b.n	800226a <HAL_RCC_GetSysClockFreq+0x172>
+ 8002136:	e0d8      	b.n	80022ea <HAL_RCC_GetSysClockFreq+0x1f2>
     }
     case RCC_CFGR_SWS_PLL:  /* PLL used as system clock  source */
     {
       /* PLL_VCO = (HSE_VALUE or HSI_VALUE / PLLM) * PLLN
       SYSCLK = PLL_VCO / PLLP */
       pllm = RCC->PLLCFGR & RCC_PLLCFGR_PLLM;
- 8002138:	4b4f      	ldr	r3, [pc, #316]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
+ 8002138:	4b6f      	ldr	r3, [pc, #444]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
  800213a:	685b      	ldr	r3, [r3, #4]
  800213c:	f003 033f 	and.w	r3, r3, #63	@ 0x3f
- 8002140:	637b      	str	r3, [r7, #52]	@ 0x34
+ 8002140:	647b      	str	r3, [r7, #68]	@ 0x44
       if (__HAL_RCC_GET_PLL_OSCSOURCE() != RCC_PLLSOURCE_HSI)
- 8002142:	4b4d      	ldr	r3, [pc, #308]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
+ 8002142:	4b6d      	ldr	r3, [pc, #436]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
  8002144:	685b      	ldr	r3, [r3, #4]
  8002146:	f403 0380 	and.w	r3, r3, #4194304	@ 0x400000
  800214a:	2b00      	cmp	r3, #0
- 800214c:	d028      	beq.n	80021a0 <HAL_RCC_GetSysClockFreq+0xa8>
+ 800214c:	d063      	beq.n	8002216 <HAL_RCC_GetSysClockFreq+0x11e>
       {
         /* HSE used as PLL clock source */
         pllvco = (uint32_t)((((uint64_t) HSE_VALUE * ((uint64_t)((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos)))) / (uint64_t)pllm);
- 800214e:	4b4a      	ldr	r3, [pc, #296]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
+ 800214e:	4b6a      	ldr	r3, [pc, #424]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
  8002150:	685b      	ldr	r3, [r3, #4]
  8002152:	099b      	lsrs	r3, r3, #6
  8002154:	2200      	movs	r2, #0
- 8002156:	623b      	str	r3, [r7, #32]
- 8002158:	627a      	str	r2, [r7, #36]	@ 0x24
- 800215a:	6a3b      	ldr	r3, [r7, #32]
- 800215c:	f3c3 0008 	ubfx	r0, r3, #0, #9
- 8002160:	2100      	movs	r1, #0
- 8002162:	4b47      	ldr	r3, [pc, #284]	@ (8002280 <HAL_RCC_GetSysClockFreq+0x188>)
- 8002164:	fb03 f201 	mul.w	r2, r3, r1
- 8002168:	2300      	movs	r3, #0
- 800216a:	fb00 f303 	mul.w	r3, r0, r3
- 800216e:	4413      	add	r3, r2
- 8002170:	4a43      	ldr	r2, [pc, #268]	@ (8002280 <HAL_RCC_GetSysClockFreq+0x188>)
- 8002172:	fba0 1202 	umull	r1, r2, r0, r2
- 8002176:	62fa      	str	r2, [r7, #44]	@ 0x2c
- 8002178:	460a      	mov	r2, r1
- 800217a:	62ba      	str	r2, [r7, #40]	@ 0x28
- 800217c:	6afa      	ldr	r2, [r7, #44]	@ 0x2c
- 800217e:	4413      	add	r3, r2
- 8002180:	62fb      	str	r3, [r7, #44]	@ 0x2c
- 8002182:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8002184:	2200      	movs	r2, #0
- 8002186:	61bb      	str	r3, [r7, #24]
- 8002188:	61fa      	str	r2, [r7, #28]
- 800218a:	e9d7 2306 	ldrd	r2, r3, [r7, #24]
- 800218e:	e9d7 010a 	ldrd	r0, r1, [r7, #40]	@ 0x28
- 8002192:	f7fe f819 	bl	80001c8 <__aeabi_uldivmod>
- 8002196:	4602      	mov	r2, r0
- 8002198:	460b      	mov	r3, r1
- 800219a:	4613      	mov	r3, r2
- 800219c:	63fb      	str	r3, [r7, #60]	@ 0x3c
- 800219e:	e053      	b.n	8002248 <HAL_RCC_GetSysClockFreq+0x150>
+ 8002156:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 8002158:	63fa      	str	r2, [r7, #60]	@ 0x3c
+ 800215a:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 800215c:	f3c3 0308 	ubfx	r3, r3, #0, #9
+ 8002160:	633b      	str	r3, [r7, #48]	@ 0x30
+ 8002162:	2300      	movs	r3, #0
+ 8002164:	637b      	str	r3, [r7, #52]	@ 0x34
+ 8002166:	e9d7 450c 	ldrd	r4, r5, [r7, #48]	@ 0x30
+ 800216a:	4622      	mov	r2, r4
+ 800216c:	462b      	mov	r3, r5
+ 800216e:	f04f 0000 	mov.w	r0, #0
+ 8002172:	f04f 0100 	mov.w	r1, #0
+ 8002176:	0159      	lsls	r1, r3, #5
+ 8002178:	ea41 61d2 	orr.w	r1, r1, r2, lsr #27
+ 800217c:	0150      	lsls	r0, r2, #5
+ 800217e:	4602      	mov	r2, r0
+ 8002180:	460b      	mov	r3, r1
+ 8002182:	4621      	mov	r1, r4
+ 8002184:	1a51      	subs	r1, r2, r1
+ 8002186:	6139      	str	r1, [r7, #16]
+ 8002188:	4629      	mov	r1, r5
+ 800218a:	eb63 0301 	sbc.w	r3, r3, r1
+ 800218e:	617b      	str	r3, [r7, #20]
+ 8002190:	f04f 0200 	mov.w	r2, #0
+ 8002194:	f04f 0300 	mov.w	r3, #0
+ 8002198:	e9d7 ab04 	ldrd	sl, fp, [r7, #16]
+ 800219c:	4659      	mov	r1, fp
+ 800219e:	018b      	lsls	r3, r1, #6
+ 80021a0:	4651      	mov	r1, sl
+ 80021a2:	ea43 6391 	orr.w	r3, r3, r1, lsr #26
+ 80021a6:	4651      	mov	r1, sl
+ 80021a8:	018a      	lsls	r2, r1, #6
+ 80021aa:	4651      	mov	r1, sl
+ 80021ac:	ebb2 0801 	subs.w	r8, r2, r1
+ 80021b0:	4659      	mov	r1, fp
+ 80021b2:	eb63 0901 	sbc.w	r9, r3, r1
+ 80021b6:	f04f 0200 	mov.w	r2, #0
+ 80021ba:	f04f 0300 	mov.w	r3, #0
+ 80021be:	ea4f 03c9 	mov.w	r3, r9, lsl #3
+ 80021c2:	ea43 7358 	orr.w	r3, r3, r8, lsr #29
+ 80021c6:	ea4f 02c8 	mov.w	r2, r8, lsl #3
+ 80021ca:	4690      	mov	r8, r2
+ 80021cc:	4699      	mov	r9, r3
+ 80021ce:	4623      	mov	r3, r4
+ 80021d0:	eb18 0303 	adds.w	r3, r8, r3
+ 80021d4:	60bb      	str	r3, [r7, #8]
+ 80021d6:	462b      	mov	r3, r5
+ 80021d8:	eb49 0303 	adc.w	r3, r9, r3
+ 80021dc:	60fb      	str	r3, [r7, #12]
+ 80021de:	f04f 0200 	mov.w	r2, #0
+ 80021e2:	f04f 0300 	mov.w	r3, #0
+ 80021e6:	e9d7 4502 	ldrd	r4, r5, [r7, #8]
+ 80021ea:	4629      	mov	r1, r5
+ 80021ec:	024b      	lsls	r3, r1, #9
+ 80021ee:	4621      	mov	r1, r4
+ 80021f0:	ea43 53d1 	orr.w	r3, r3, r1, lsr #23
+ 80021f4:	4621      	mov	r1, r4
+ 80021f6:	024a      	lsls	r2, r1, #9
+ 80021f8:	4610      	mov	r0, r2
+ 80021fa:	4619      	mov	r1, r3
+ 80021fc:	6c7b      	ldr	r3, [r7, #68]	@ 0x44
+ 80021fe:	2200      	movs	r2, #0
+ 8002200:	62bb      	str	r3, [r7, #40]	@ 0x28
+ 8002202:	62fa      	str	r2, [r7, #44]	@ 0x2c
+ 8002204:	e9d7 230a 	ldrd	r2, r3, [r7, #40]	@ 0x28
+ 8002208:	f7fd ffde 	bl	80001c8 <__aeabi_uldivmod>
+ 800220c:	4602      	mov	r2, r0
+ 800220e:	460b      	mov	r3, r1
+ 8002210:	4613      	mov	r3, r2
+ 8002212:	64fb      	str	r3, [r7, #76]	@ 0x4c
+ 8002214:	e058      	b.n	80022c8 <HAL_RCC_GetSysClockFreq+0x1d0>
       }
       else
       {
         /* HSI used as PLL clock source */
         pllvco = (uint32_t)((((uint64_t) HSI_VALUE * ((uint64_t)((RCC->PLLCFGR & RCC_PLLCFGR_PLLN) >> RCC_PLLCFGR_PLLN_Pos)))) / (uint64_t)pllm);
- 80021a0:	4b35      	ldr	r3, [pc, #212]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
- 80021a2:	685b      	ldr	r3, [r3, #4]
- 80021a4:	099b      	lsrs	r3, r3, #6
- 80021a6:	2200      	movs	r2, #0
- 80021a8:	613b      	str	r3, [r7, #16]
- 80021aa:	617a      	str	r2, [r7, #20]
- 80021ac:	693b      	ldr	r3, [r7, #16]
- 80021ae:	f3c3 0a08 	ubfx	sl, r3, #0, #9
- 80021b2:	f04f 0b00 	mov.w	fp, #0
- 80021b6:	4652      	mov	r2, sl
- 80021b8:	465b      	mov	r3, fp
- 80021ba:	f04f 0000 	mov.w	r0, #0
- 80021be:	f04f 0100 	mov.w	r1, #0
- 80021c2:	0159      	lsls	r1, r3, #5
- 80021c4:	ea41 61d2 	orr.w	r1, r1, r2, lsr #27
- 80021c8:	0150      	lsls	r0, r2, #5
- 80021ca:	4602      	mov	r2, r0
- 80021cc:	460b      	mov	r3, r1
- 80021ce:	ebb2 080a 	subs.w	r8, r2, sl
- 80021d2:	eb63 090b 	sbc.w	r9, r3, fp
- 80021d6:	f04f 0200 	mov.w	r2, #0
- 80021da:	f04f 0300 	mov.w	r3, #0
- 80021de:	ea4f 1389 	mov.w	r3, r9, lsl #6
- 80021e2:	ea43 6398 	orr.w	r3, r3, r8, lsr #26
- 80021e6:	ea4f 1288 	mov.w	r2, r8, lsl #6
- 80021ea:	ebb2 0408 	subs.w	r4, r2, r8
- 80021ee:	eb63 0509 	sbc.w	r5, r3, r9
- 80021f2:	f04f 0200 	mov.w	r2, #0
- 80021f6:	f04f 0300 	mov.w	r3, #0
- 80021fa:	00eb      	lsls	r3, r5, #3
- 80021fc:	ea43 7354 	orr.w	r3, r3, r4, lsr #29
- 8002200:	00e2      	lsls	r2, r4, #3
- 8002202:	4614      	mov	r4, r2
- 8002204:	461d      	mov	r5, r3
- 8002206:	eb14 030a 	adds.w	r3, r4, sl
- 800220a:	603b      	str	r3, [r7, #0]
- 800220c:	eb45 030b 	adc.w	r3, r5, fp
- 8002210:	607b      	str	r3, [r7, #4]
- 8002212:	f04f 0200 	mov.w	r2, #0
- 8002216:	f04f 0300 	mov.w	r3, #0
- 800221a:	e9d7 4500 	ldrd	r4, r5, [r7]
- 800221e:	4629      	mov	r1, r5
- 8002220:	028b      	lsls	r3, r1, #10
- 8002222:	4621      	mov	r1, r4
- 8002224:	ea43 5391 	orr.w	r3, r3, r1, lsr #22
- 8002228:	4621      	mov	r1, r4
- 800222a:	028a      	lsls	r2, r1, #10
- 800222c:	4610      	mov	r0, r2
- 800222e:	4619      	mov	r1, r3
- 8002230:	6b7b      	ldr	r3, [r7, #52]	@ 0x34
- 8002232:	2200      	movs	r2, #0
- 8002234:	60bb      	str	r3, [r7, #8]
- 8002236:	60fa      	str	r2, [r7, #12]
- 8002238:	e9d7 2302 	ldrd	r2, r3, [r7, #8]
- 800223c:	f7fd ffc4 	bl	80001c8 <__aeabi_uldivmod>
- 8002240:	4602      	mov	r2, r0
- 8002242:	460b      	mov	r3, r1
- 8002244:	4613      	mov	r3, r2
- 8002246:	63fb      	str	r3, [r7, #60]	@ 0x3c
+ 8002216:	4b38      	ldr	r3, [pc, #224]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
+ 8002218:	685b      	ldr	r3, [r3, #4]
+ 800221a:	099b      	lsrs	r3, r3, #6
+ 800221c:	2200      	movs	r2, #0
+ 800221e:	4618      	mov	r0, r3
+ 8002220:	4611      	mov	r1, r2
+ 8002222:	f3c0 0308 	ubfx	r3, r0, #0, #9
+ 8002226:	623b      	str	r3, [r7, #32]
+ 8002228:	2300      	movs	r3, #0
+ 800222a:	627b      	str	r3, [r7, #36]	@ 0x24
+ 800222c:	e9d7 8908 	ldrd	r8, r9, [r7, #32]
+ 8002230:	4642      	mov	r2, r8
+ 8002232:	464b      	mov	r3, r9
+ 8002234:	f04f 0000 	mov.w	r0, #0
+ 8002238:	f04f 0100 	mov.w	r1, #0
+ 800223c:	0159      	lsls	r1, r3, #5
+ 800223e:	ea41 61d2 	orr.w	r1, r1, r2, lsr #27
+ 8002242:	0150      	lsls	r0, r2, #5
+ 8002244:	4602      	mov	r2, r0
+ 8002246:	460b      	mov	r3, r1
+ 8002248:	4641      	mov	r1, r8
+ 800224a:	ebb2 0a01 	subs.w	sl, r2, r1
+ 800224e:	4649      	mov	r1, r9
+ 8002250:	eb63 0b01 	sbc.w	fp, r3, r1
+ 8002254:	f04f 0200 	mov.w	r2, #0
+ 8002258:	f04f 0300 	mov.w	r3, #0
+ 800225c:	ea4f 138b 	mov.w	r3, fp, lsl #6
+ 8002260:	ea43 639a 	orr.w	r3, r3, sl, lsr #26
+ 8002264:	ea4f 128a 	mov.w	r2, sl, lsl #6
+ 8002268:	ebb2 040a 	subs.w	r4, r2, sl
+ 800226c:	eb63 050b 	sbc.w	r5, r3, fp
+ 8002270:	f04f 0200 	mov.w	r2, #0
+ 8002274:	f04f 0300 	mov.w	r3, #0
+ 8002278:	00eb      	lsls	r3, r5, #3
+ 800227a:	ea43 7354 	orr.w	r3, r3, r4, lsr #29
+ 800227e:	00e2      	lsls	r2, r4, #3
+ 8002280:	4614      	mov	r4, r2
+ 8002282:	461d      	mov	r5, r3
+ 8002284:	4643      	mov	r3, r8
+ 8002286:	18e3      	adds	r3, r4, r3
+ 8002288:	603b      	str	r3, [r7, #0]
+ 800228a:	464b      	mov	r3, r9
+ 800228c:	eb45 0303 	adc.w	r3, r5, r3
+ 8002290:	607b      	str	r3, [r7, #4]
+ 8002292:	f04f 0200 	mov.w	r2, #0
+ 8002296:	f04f 0300 	mov.w	r3, #0
+ 800229a:	e9d7 4500 	ldrd	r4, r5, [r7]
+ 800229e:	4629      	mov	r1, r5
+ 80022a0:	028b      	lsls	r3, r1, #10
+ 80022a2:	4621      	mov	r1, r4
+ 80022a4:	ea43 5391 	orr.w	r3, r3, r1, lsr #22
+ 80022a8:	4621      	mov	r1, r4
+ 80022aa:	028a      	lsls	r2, r1, #10
+ 80022ac:	4610      	mov	r0, r2
+ 80022ae:	4619      	mov	r1, r3
+ 80022b0:	6c7b      	ldr	r3, [r7, #68]	@ 0x44
+ 80022b2:	2200      	movs	r2, #0
+ 80022b4:	61bb      	str	r3, [r7, #24]
+ 80022b6:	61fa      	str	r2, [r7, #28]
+ 80022b8:	e9d7 2306 	ldrd	r2, r3, [r7, #24]
+ 80022bc:	f7fd ff84 	bl	80001c8 <__aeabi_uldivmod>
+ 80022c0:	4602      	mov	r2, r0
+ 80022c2:	460b      	mov	r3, r1
+ 80022c4:	4613      	mov	r3, r2
+ 80022c6:	64fb      	str	r3, [r7, #76]	@ 0x4c
       }
       pllp = ((((RCC->PLLCFGR & RCC_PLLCFGR_PLLP) >> RCC_PLLCFGR_PLLP_Pos) + 1U) * 2U);
- 8002248:	4b0b      	ldr	r3, [pc, #44]	@ (8002278 <HAL_RCC_GetSysClockFreq+0x180>)
- 800224a:	685b      	ldr	r3, [r3, #4]
- 800224c:	0c1b      	lsrs	r3, r3, #16
- 800224e:	f003 0303 	and.w	r3, r3, #3
- 8002252:	3301      	adds	r3, #1
- 8002254:	005b      	lsls	r3, r3, #1
- 8002256:	633b      	str	r3, [r7, #48]	@ 0x30
+ 80022c8:	4b0b      	ldr	r3, [pc, #44]	@ (80022f8 <HAL_RCC_GetSysClockFreq+0x200>)
+ 80022ca:	685b      	ldr	r3, [r3, #4]
+ 80022cc:	0c1b      	lsrs	r3, r3, #16
+ 80022ce:	f003 0303 	and.w	r3, r3, #3
+ 80022d2:	3301      	adds	r3, #1
+ 80022d4:	005b      	lsls	r3, r3, #1
+ 80022d6:	643b      	str	r3, [r7, #64]	@ 0x40
 
       sysclockfreq = pllvco / pllp;
- 8002258:	6bfa      	ldr	r2, [r7, #60]	@ 0x3c
- 800225a:	6b3b      	ldr	r3, [r7, #48]	@ 0x30
- 800225c:	fbb2 f3f3 	udiv	r3, r2, r3
- 8002260:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 80022d8:	6cfa      	ldr	r2, [r7, #76]	@ 0x4c
+ 80022da:	6c3b      	ldr	r3, [r7, #64]	@ 0x40
+ 80022dc:	fbb2 f3f3 	udiv	r3, r2, r3
+ 80022e0:	64bb      	str	r3, [r7, #72]	@ 0x48
       break;
- 8002262:	e002      	b.n	800226a <HAL_RCC_GetSysClockFreq+0x172>
+ 80022e2:	e002      	b.n	80022ea <HAL_RCC_GetSysClockFreq+0x1f2>
     }
     default:
     {
       sysclockfreq = HSI_VALUE;
- 8002264:	4b05      	ldr	r3, [pc, #20]	@ (800227c <HAL_RCC_GetSysClockFreq+0x184>)
- 8002266:	63bb      	str	r3, [r7, #56]	@ 0x38
+ 80022e4:	4b05      	ldr	r3, [pc, #20]	@ (80022fc <HAL_RCC_GetSysClockFreq+0x204>)
+ 80022e6:	64bb      	str	r3, [r7, #72]	@ 0x48
       break;
- 8002268:	bf00      	nop
+ 80022e8:	bf00      	nop
     }
   }
   return sysclockfreq;
- 800226a:	6bbb      	ldr	r3, [r7, #56]	@ 0x38
+ 80022ea:	6cbb      	ldr	r3, [r7, #72]	@ 0x48
 }
- 800226c:	4618      	mov	r0, r3
- 800226e:	3740      	adds	r7, #64	@ 0x40
- 8002270:	46bd      	mov	sp, r7
- 8002272:	e8bd 8fb0 	ldmia.w	sp!, {r4, r5, r7, r8, r9, sl, fp, pc}
- 8002276:	bf00      	nop
- 8002278:	40023800 	.word	0x40023800
- 800227c:	00f42400 	.word	0x00f42400
- 8002280:	017d7840 	.word	0x017d7840
+ 80022ec:	4618      	mov	r0, r3
+ 80022ee:	3750      	adds	r7, #80	@ 0x50
+ 80022f0:	46bd      	mov	sp, r7
+ 80022f2:	e8bd 8fb0 	ldmia.w	sp!, {r4, r5, r7, r8, r9, sl, fp, pc}
+ 80022f6:	bf00      	nop
+ 80022f8:	40023800 	.word	0x40023800
+ 80022fc:	00f42400 	.word	0x00f42400
+ 8002300:	007a1200 	.word	0x007a1200
 
-08002284 <memset>:
- 8002284:	4402      	add	r2, r0
- 8002286:	4603      	mov	r3, r0
- 8002288:	4293      	cmp	r3, r2
- 800228a:	d100      	bne.n	800228e <memset+0xa>
- 800228c:	4770      	bx	lr
- 800228e:	f803 1b01 	strb.w	r1, [r3], #1
- 8002292:	e7f9      	b.n	8002288 <memset+0x4>
+08002304 <memset>:
+ 8002304:	4402      	add	r2, r0
+ 8002306:	4603      	mov	r3, r0
+ 8002308:	4293      	cmp	r3, r2
+ 800230a:	d100      	bne.n	800230e <memset+0xa>
+ 800230c:	4770      	bx	lr
+ 800230e:	f803 1b01 	strb.w	r1, [r3], #1
+ 8002312:	e7f9      	b.n	8002308 <memset+0x4>
 
-08002294 <__libc_init_array>:
- 8002294:	b570      	push	{r4, r5, r6, lr}
- 8002296:	4d0d      	ldr	r5, [pc, #52]	@ (80022cc <__libc_init_array+0x38>)
- 8002298:	4c0d      	ldr	r4, [pc, #52]	@ (80022d0 <__libc_init_array+0x3c>)
- 800229a:	1b64      	subs	r4, r4, r5
- 800229c:	10a4      	asrs	r4, r4, #2
- 800229e:	2600      	movs	r6, #0
- 80022a0:	42a6      	cmp	r6, r4
- 80022a2:	d109      	bne.n	80022b8 <__libc_init_array+0x24>
- 80022a4:	4d0b      	ldr	r5, [pc, #44]	@ (80022d4 <__libc_init_array+0x40>)
- 80022a6:	4c0c      	ldr	r4, [pc, #48]	@ (80022d8 <__libc_init_array+0x44>)
- 80022a8:	f000 f818 	bl	80022dc <_init>
- 80022ac:	1b64      	subs	r4, r4, r5
- 80022ae:	10a4      	asrs	r4, r4, #2
- 80022b0:	2600      	movs	r6, #0
- 80022b2:	42a6      	cmp	r6, r4
- 80022b4:	d105      	bne.n	80022c2 <__libc_init_array+0x2e>
- 80022b6:	bd70      	pop	{r4, r5, r6, pc}
- 80022b8:	f855 3b04 	ldr.w	r3, [r5], #4
- 80022bc:	4798      	blx	r3
- 80022be:	3601      	adds	r6, #1
- 80022c0:	e7ee      	b.n	80022a0 <__libc_init_array+0xc>
- 80022c2:	f855 3b04 	ldr.w	r3, [r5], #4
- 80022c6:	4798      	blx	r3
- 80022c8:	3601      	adds	r6, #1
- 80022ca:	e7f2      	b.n	80022b2 <__libc_init_array+0x1e>
- 80022cc:	0800230c 	.word	0x0800230c
- 80022d0:	0800230c 	.word	0x0800230c
- 80022d4:	0800230c 	.word	0x0800230c
- 80022d8:	08002310 	.word	0x08002310
+08002314 <__libc_init_array>:
+ 8002314:	b570      	push	{r4, r5, r6, lr}
+ 8002316:	4d0d      	ldr	r5, [pc, #52]	@ (800234c <__libc_init_array+0x38>)
+ 8002318:	4c0d      	ldr	r4, [pc, #52]	@ (8002350 <__libc_init_array+0x3c>)
+ 800231a:	1b64      	subs	r4, r4, r5
+ 800231c:	10a4      	asrs	r4, r4, #2
+ 800231e:	2600      	movs	r6, #0
+ 8002320:	42a6      	cmp	r6, r4
+ 8002322:	d109      	bne.n	8002338 <__libc_init_array+0x24>
+ 8002324:	4d0b      	ldr	r5, [pc, #44]	@ (8002354 <__libc_init_array+0x40>)
+ 8002326:	4c0c      	ldr	r4, [pc, #48]	@ (8002358 <__libc_init_array+0x44>)
+ 8002328:	f000 f818 	bl	800235c <_init>
+ 800232c:	1b64      	subs	r4, r4, r5
+ 800232e:	10a4      	asrs	r4, r4, #2
+ 8002330:	2600      	movs	r6, #0
+ 8002332:	42a6      	cmp	r6, r4
+ 8002334:	d105      	bne.n	8002342 <__libc_init_array+0x2e>
+ 8002336:	bd70      	pop	{r4, r5, r6, pc}
+ 8002338:	f855 3b04 	ldr.w	r3, [r5], #4
+ 800233c:	4798      	blx	r3
+ 800233e:	3601      	adds	r6, #1
+ 8002340:	e7ee      	b.n	8002320 <__libc_init_array+0xc>
+ 8002342:	f855 3b04 	ldr.w	r3, [r5], #4
+ 8002346:	4798      	blx	r3
+ 8002348:	3601      	adds	r6, #1
+ 800234a:	e7f2      	b.n	8002332 <__libc_init_array+0x1e>
+ 800234c:	0800238c 	.word	0x0800238c
+ 8002350:	0800238c 	.word	0x0800238c
+ 8002354:	0800238c 	.word	0x0800238c
+ 8002358:	08002390 	.word	0x08002390
 
-080022dc <_init>:
- 80022dc:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80022de:	bf00      	nop
- 80022e0:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80022e2:	bc08      	pop	{r3}
- 80022e4:	469e      	mov	lr, r3
- 80022e6:	4770      	bx	lr
+0800235c <_init>:
+ 800235c:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800235e:	bf00      	nop
+ 8002360:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 8002362:	bc08      	pop	{r3}
+ 8002364:	469e      	mov	lr, r3
+ 8002366:	4770      	bx	lr
 
-080022e8 <_fini>:
- 80022e8:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
- 80022ea:	bf00      	nop
- 80022ec:	bcf8      	pop	{r3, r4, r5, r6, r7}
- 80022ee:	bc08      	pop	{r3}
- 80022f0:	469e      	mov	lr, r3
- 80022f2:	4770      	bx	lr
+08002368 <_fini>:
+ 8002368:	b5f8      	push	{r3, r4, r5, r6, r7, lr}
+ 800236a:	bf00      	nop
+ 800236c:	bcf8      	pop	{r3, r4, r5, r6, r7}
+ 800236e:	bc08      	pop	{r3}
+ 8002370:	469e      	mov	lr, r3
+ 8002372:	4770      	bx	lr
