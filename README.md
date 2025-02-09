@@ -1,39 +1,64 @@
-# CanDrive Smart Dashboard  
+# 🚗 **CanDrive Smart Dashboard**  
 
-## Project Overview  
-*CanDrive Smart Dashboard* is an innovative embedded system project designed as part of the PG-Diploma in Embedded System Design. This dashboard provides real-time monitoring and display of essential vehicle parameters, enhancing the safety and efficiency of vehicle operations.  
+## 📌 Project Overview  
+**CanDrive Smart Dashboard** is an innovative embedded system project developed as part of the **PG-Diploma in Embedded System Design**. This dashboard provides **real-time monitoring and display** of essential vehicle parameters, improving safety and efficiency.  
 
-The system integrates various sensors and displays to track and present:  
-- *Vehicle Speed & Distance: Calculated using an **IR sensor* to determine wheel revolutions.  
-- *Device Temperature: Measured using the **TMP102 temperature sensor* and displayed on the dashboard.  
-- *Door Status: Monitored using a **reed switch* to detect open or closed doors.  
+### 🔍 **Monitored Parameters**  
+- **📏 Vehicle Speed & Distance:** Measured using an **IR sensor** (wheel revolution-based calculation).  
+- **🌡 Device Temperature:** Tracked via a **TMP102 sensor** and displayed on the dashboard.  
+- **🚪 Door Status:** Monitored with a **reed switch** to detect open/closed doors.  
 
-## Current Status  
-The project is *fully developed and operational*, but we continue to enhance its features and robustness.  
+---  
 
-## Key Features  
-1. *Real-Time Data Display*: The system provides immediate updates on all monitored parameters.  
-2. *Robust Communication*:  
-   - *CAN bus* for data transfer between STM32-based data collection nodes.  
-   - *UART communication* to transfer sensor data from STM32 to ESP32.  
-   - *MQTT protocol* over Wi-Fi for sending processed data from ESP32 to the ThingsBoard dashboard.  
-3. *FreeRTOS Implementation: Used on **STM32 microcontrollers* for better control over data collection and transmission.  
-4. *User-Friendly Interface*: ThingsBoard-based dashboard for visualization.  
+## ✅ **Current Status**  
+🚀 The project is **fully developed and operational** with ongoing enhancements for better performance and robustness.  
 
-## Components and Tools  
-- *Microcontrollers*: STM32 (for data collection), ESP32 (for cloud communication)  
-- *Sensors*:  
-  - *Speed & Distance Measurement*: IR sensor (wheel revolution-based calculation)  
-  - *Temperature Monitoring*: TMP102 sensor  
-  - *Door Status Detection*: Reed switch  
-  - *Future Enhancement: **INA219* for power monitoring to ensure a stable power supply  
-- *Online Dashboard*: ThingsBoard  
-- *Software Tools*: STM32CubeIDE, Arduino IDE, VS Code  
-- *Programming Language*: Embedded C, Python  
+---  
 
-## Future Enhancements  
-- Integration of *INA219* for real-time power monitoring.  
-- Enhancements in the ThingsBoard dashboard for better analytics.  
-- Additional safety and monitoring features for improved reliability.  
+## ⭐ **Key Features**  
+### 📡 **Real-Time Data Display**  
+🔹 Instant updates on speed, temperature, and door status.  
 
-This project is an ongoing effort to push the boundaries of embedded systems in automotive applications. With continuous improvements, we aim to make it more efficient, scalable, and adaptable to future advancements. Stay tuned for updates! 🚀
+### 🔗 **Robust Communication**  
+🔹 **CAN bus**: Data exchange between STM32-based nodes.  
+🔹 **UART**: Transfers sensor data from STM32 to ESP32.  
+🔹 **MQTT Protocol**: Sends processed data from ESP32 to the **ThingsBoard** dashboard over Wi-Fi.  
+
+### ⚙ **FreeRTOS Integration**  
+🔹 **STM32 Microcontrollers** use **FreeRTOS** for efficient data collection and task management.  
+
+### 📊 **User-Friendly Interface**  
+🔹 **ThingsBoard-based** visualization dashboard for intuitive monitoring.  
+
+---  
+
+## 🔧 **Components and Tools**  
+### 🖥 **Microcontrollers**  
+✔ **STM32** - Data collection and processing.  
+✔ **ESP32** - Cloud communication and MQTT handling.  
+
+### 🛠 **Sensors**  
+✔ **IR Sensor** - Speed & Distance Calculation.  
+✔ **TMP102** - Temperature Monitoring.  
+✔ **Reed Switch** - Door Status Detection.  
+✔ **(Future) INA219** - Power Monitoring for stability.  
+
+### 🖥 **Software Tools**  
+✔ **STM32CubeIDE**, **Arduino IDE**, **VS Code**  
+
+### 📝 **Programming Languages**  
+✔ **Embedded C, Python**  
+
+---  
+
+## 🚀 **Future Enhancements**  
+✅ **Power Monitoring**: Integration of **INA219** for real-time power tracking.  
+✅ **Enhanced Dashboard**: Improved **ThingsBoard analytics** for better insights.  
+✅ **Safety Upgrades**: Additional monitoring features for increased reliability.  
+
+📢 *This project is a step forward in automotive embedded systems! With continuous improvements, we aim to make it more efficient, scalable, and adaptable for the future.* 🚀  
+
+---  
+
+ 
+
