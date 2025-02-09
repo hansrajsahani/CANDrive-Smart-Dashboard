@@ -147,8 +147,9 @@ void interpretUARTData(const uint8_t* data, float* speed, float* distance, int* 
 
   // Bytes 3-4: Temperature and Door Status
   // Extract the 12-bit temperature value (first 4 bits of byte 3 and all 8 bits of byte 4)
-  uint16_t tempRaw = ((data[3] & 0x0F) << 8) | data[4];
-  *temperature = tempRaw * 0.625f;
+  uint16_t tempRaw = (data[3] << 8)  | (data[4] & 0xF0);
+  tempRaw = tempRaw >> 4;
+  *temperature = tempRaw * 0.0625f;
 
   // Extract the door status (last 4 bits of byte 4)
   *doorStatus = data[4] & 0x01;
