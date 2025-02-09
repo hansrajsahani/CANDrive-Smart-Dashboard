@@ -1,8 +1,18 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <esp_wifi.h>
 #include <ArduinoJson.h>
 #include "config.h"
+
+// Uncomment the following line to enable debug prints
+#define DEBUG
+
+#ifdef DEBUG
+  #define DEBUG_PRINT(x)  Serial.print(x)
+  #define DEBUG_PRINTLN(x)  Serial.println(x)
+#else
+  #define DEBUG_PRINT(x)
+  #define DEBUG_PRINTLN(x)
+#endif
 
 // Function Prototypes
 void setupWiFi();
@@ -11,6 +21,7 @@ void setupUART();
 void spoofMACAddress();
 void processUARTData();
 void publishData(float speed, float distance, int doorStatus, float temperature);
+void interpretUARTData(const uint8_t* data, float* speed, float* distance, int* doorStatus, float* temperature);
 
 // Global Variables
 WiFiClient espClient;
@@ -19,58 +30,59 @@ DynamicJsonDocument sensorDataPayload(1024);
 char sensorDataBuffer[1024];
 
 void setup() {
-  Serial.begin(115200);
-  spoofMACAddress();
-  setupWiFi();
-  setupMQTT();
-  setupUART();
+  Serial.begin(115200); // Initialize serial communication for debugging
+  spoofMACAddress();    // Optionally change the MAC address
+  setupWiFi();          // Connect to Wi-Fi
+  setupMQTT();          // Initialize MQTT client
+  setupUART();          // Configure UART for data reception
 }
 
 void loop() {
+  // Ensure the MQTT client is connected
   if (!client.connected()) {
     while (!client.connected()) {
-      Serial.println("Attempting MQTT connection...");
+      DEBUG_PRINTLN("Attempting MQTT connection...");
       if (client.connect(MQTT_CLIENT_ID, MQTT_USERNAME, NULL)) {
-        Serial.println("Connected to MQTT broker");
+        DEBUG_PRINTLN("Connected to MQTT broker");
       } else {
-        Serial.print("Failed, rc=");
-        Serial.print(client.state());
-        Serial.println(" try again in 5 seconds");
+        DEBUG_PRINT("Failed, rc=");
+        DEBUG_PRINT(client.state());
+        DEBUG_PRINTLN(" try again in 5 seconds");
         delay(5000);
       }
     }
   }
-  client.loop();
-  processUARTData();
+  client.loop();       // Maintain MQTT connection
+  processUARTData();   // Read and process incoming UART data
 }
 
 void setupWiFi() {
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  WiFi.mode(WIFI_STA);             // Set Wi-Fi to station mode
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD); // Connect to the specified Wi-Fi network
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
-    Serial.println("Connecting to WiFi...");
+    DEBUG_PRINTLN("Connecting to WiFi...");
   }
-  Serial.println("Connected to WiFi");
-  Serial.print("ESP32 IP Address: ");
-  Serial.println(WiFi.localIP());
+  DEBUG_PRINTLN("Connected to WiFi");
+  DEBUG_PRINT("ESP32 IP Address: ");
+  DEBUG_PRINTLN(WiFi.localIP());
 }
 
 void setupMQTT() {
-  client.setServer(MQTT_BROKER, MQTT_PORT);
+  client.setServer(MQTT_BROKER, MQTT_PORT); // Set MQTT broker address and port
 }
 
 void setupUART() {
   const uart_config_t uartConfig = {
-    .baud_rate = 115200,
-    .data_bits = UART_DATA_8_BITS,
-    .parity = UART_PARITY_DISABLE,
-    .stop_bits = UART_STOP_BITS_1,
-    .flow_ctrl = UART_HW_FLOWCTRL_DISABLE
+    .baud_rate = 115200,                // Set baud rate to 115200
+    .data_bits = UART_DATA_8_BITS,      // 8 data bits
+    .parity = UART_PARITY_DISABLE,      // No parity
+    .stop_bits = UART_STOP_BITS_1,      // 1 stop bit
+    .flow_ctrl = UART_HW_FLOWCTRL_DISABLE // No hardware flow control
   };
-  uart_param_config(UART_NUM, &uartConfig);
-  uart_set_pin(UART_NUM, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
-  uart_driver_install(UART_NUM, RX_BUF_SIZE, 0, 0, NULL, 0);
+  uart_param_config(UART_NUM, &uartConfig); // Configure UART parameters
+  uart_set_pin(UART_NUM, TXD_PIN, RXD_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE); // Set UART pins
+  uart_driver_install(UART_NUM, RX_BUF_SIZE, 0, 0, NULL, 0); // Install UART driver
 }
 
 void spoofMACAddress() {
@@ -78,39 +90,81 @@ void spoofMACAddress() {
     uint8_t newMac[6] = NEW_MAC_ADDRESS;
     esp_err_t result = esp_wifi_set_mac(WIFI_IF_STA, newMac);
     if (result == ESP_OK) {
-      Serial.print("MAC Address spoofed to: ");
-      Serial.println(WiFi.macAddress());
+      DEBUG_PRINT("MAC Address spoofed to: ");
+      DEBUG_PRINTLN(WiFi.macAddress());
     } else {
-      Serial.println("Failed to spoof MAC Address");
+      DEBUG_PRINTLN("Failed to spoof MAC Address");
     }
   #else
-    Serial.println("No MAC Address defined for spoofing.");
+    DEBUG_PRINTLN("No MAC Address defined for spoofing.");
   #endif
 }
 
 void processUARTData() {
-  uint8_t data[RX_BUF_SIZE];
-  int len = uart_read_bytes(UART_NUM, data, RX_BUF_SIZE, 20 / portTICK_RATE_MS);
-  if (len > 0) {
-    // Interpret the received data to extract Speed, Distance, Door Status, and Temperature
-    float speed = 0.0;       // Placeholder for extracted speed
-    float distance = 0.0;    // Placeholder for extracted distance
-    int doorStatus = 0;      // Placeholder for extracted door status
-    float temperature = 0.0; // Placeholder for extracted temperature
+  const int expectedLength = 5; // Expected length of the UART data frame
+  uint8_t data[expectedLength]; // Buffer to store received UART data
 
-    // TODO: Add logic to interpret 'data' and extract the above values
+  // Read bytes from UART
+  int len = uart_read_bytes(UART_NUM, data, expectedLength, 20 / portTICK_RATE_MS);
+  if (len == expectedLength) {
+    // Debug: Print the received data
+    DEBUG_PRINT("Received UART data: ");
+    for (int i = 0; i < expectedLength; i++) {
+      DEBUG_PRINT(data[i], HEX);
+      DEBUG_PRINT(" ");
+    }
+    DEBUG_PRINTLN("");
 
+    float speed = 0.0;
+    float distance = 0.0;
+    int doorStatus = 0;
+    float temperature = 0.0;
+
+    // Interpret the received UART data
+    interpretUARTData(data, &speed, &distance, &doorStatus, &temperature);
+
+    // Debug: Print interpreted values
+    DEBUG_PRINT("Interpreted Speed: ");
+    DEBUG_PRINTLN(speed);
+    DEBUG_PRINT("Interpreted Distance: ");
+    DEBUG_PRINTLN(distance);
+    DEBUG_PRINT("Interpreted Door Status: ");
+    DEBUG_PRINTLN(doorStatus);
+    DEBUG_PRINT("Interpreted Temperature: ");
+    DEBUG_PRINTLN(temperature);
+
+    // Publish the interpreted data via MQTT
     publishData(speed, distance, doorStatus, temperature);
   }
 }
 
+void interpretUARTData(const uint8_t* data, float* speed, float* distance, int* doorStatus, float* temperature) {
+  // Byte 0: Speed
+  *speed = static_cast<float>(data[0]);
+
+  // Bytes 1-2: Distance (16-bit value, big-endian)
+  *distance = static_cast<float>((data[1] << 8) | data[2]);
+
+  // Bytes 3-4: Temperature and Door Status
+  // Extract the 12-bit temperature value (first 4 bits of byte 3 and all 8 bits of byte 4)
+  uint16_t tempRaw = ((data[3] & 0x0F) << 8) | data[4];
+  *temperature = tempRaw * 0.625f;
+
+  // Extract the door status (last 4 bits of byte 4)
+  *doorStatus = data[4] & 0x01;
+}
+
 void publishData(float speed, float distance, int doorStatus, float temperature) {
+  // Populate JSON document with sensor data
   sensorDataPayload["speed"] = speed;
   sensorDataPayload["distance"] = distance;
   sensorDataPayload["door_status"] = doorStatus;
   sensorDataPayload["temperature"] = temperature;
 
+  // Serialize JSON document to buffer
   serializeJson(sensorDataPayload, sensorDataBuffer);
+
+  // Publish serialized JSON to MQTT topic
   client.publish(MQTT_TOPIC_PUBLISH, sensorDataBuffer);
-  Serial.println("Data published to MQTT broker");
+  DEBUG_PRINTLN("Data published to MQTT broker");
 }
