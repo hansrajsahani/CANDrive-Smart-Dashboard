@@ -98,8 +98,8 @@ void interpretUARTData(const uint8_t* data, uint8_t* speed, long* distance, uint
   // Extract Speed from byte 0
   *speed = data[0];
 
-  // Extract Distance from bytes 1 and 2 (little-endian format)
-  *distance = (data[2] << 8) | data[1];
+  // Extract Distance from bytes 1 and 2
+  *distance = (data[1] << 8) | data[2];
 
   // Extract Temperature from bytes 3 and 4 (first 12 bits)
  uint16_t tempRaw = (data[3] << 8)  | (data[4] & 0xF0);
