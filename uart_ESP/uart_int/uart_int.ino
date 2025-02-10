@@ -86,8 +86,6 @@ void processUARTData() {
     // Publish the interpreted data via MQTT
     publishData(speed, distance, doorStatus, temperature);
   }
-
- //digitalWrite(READ_PIN, LOW);  // Reset pin 23 (set it LOW)
 }
 
 void interpretUARTData(const uint8_t* data, uint8_t* speed, long* distance, uint8_t* doorStatus, float* temperature) {
