@@ -574,7 +574,7 @@ void Calculate_Speed(void * argument)
 			{
 				//entering critical section to update speed, distance, revolution_count
 				taskENTER_CRITICAL();
-				speed = (wheel_revolution_cnt * WHEEL_CIRCUMFERENCE) / (2 * SPEED_CALC_INTERVAL);
+				speed = (wheel_revolution_cnt * WHEEL_CIRCUMFERENCE) / SPEED_CALC_INTERVAL;
 				distance += (speed * SPEED_CALC_INTERVAL);
 				wheel_revolution_cnt = 0;
 				recalibrate = 0;
